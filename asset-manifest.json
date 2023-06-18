@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/calendar-dnd/static/css/main.781c3e9c.css",
+    "main.js": "/calendar-dnd/static/js/main.83fbea3f.js",
+    "index.html": "/calendar-dnd/index.html",
+    "main.781c3e9c.css.map": "/calendar-dnd/static/css/main.781c3e9c.css.map",
+    "main.83fbea3f.js.map": "/calendar-dnd/static/js/main.83fbea3f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.781c3e9c.css",
+    "static/js/main.83fbea3f.js"
+  ]
+}
