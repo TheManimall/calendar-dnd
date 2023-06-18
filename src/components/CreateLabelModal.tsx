@@ -26,19 +26,23 @@ const CreateLabelModal = ({
   const [selectColor, setSelectColor] = useState<string>('')
   const [labelText, setLabelText] = useState<string>('')
 
+  // Handle functionality to select color for labels
   const handleSelectColor = useCallback((e: any) => {
     const { currentTarget: { dataset: { color }}} = e
 
     setSelectColor(color)
   }, [])
 
+  // Handle functionality to get text for labels
   const handleText = useCallback((e: any) => {
     const { target: { value }} = e
 
     setLabelText(value)
   }, [])
 
+  // Creating labels
   const handleCreateLabel = useCallback(() => {
+    // Disabled if color or text is empty
     if (!selectColor || !labelText) return
 
     onCreateLabel(dayId, taskId, labelId, selectColor, labelText)
@@ -47,6 +51,7 @@ const CreateLabelModal = ({
     onClose()
   }, [selectColor, labelText])
 
+  // Adding already created labels to task
   const handleAddLabel = useCallback((e: any) => {
     const { currentTarget: { dataset: { id, text, color }}} = e
 
@@ -54,6 +59,7 @@ const CreateLabelModal = ({
     onClose()
   }, [])
 
+  // Build Modal for creating labels
   if (isShowing) {
     return (
       ReactDOM.createPortal(

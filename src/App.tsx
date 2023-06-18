@@ -17,6 +17,7 @@ const App = (): JSX.Element => {
   const [today, setToday] = useState<string>('')
   const [holidays, setHolidays] = useState<any>({})
 
+  // Getting date for creating calendar grid by month
   useEffect(() => {
     const startOfMonth = moment().startOf('month')
     const startOfFirstWeek = moment(startOfMonth).startOf('week')
@@ -31,6 +32,7 @@ const App = (): JSX.Element => {
       day = day.clone().add(1, 'd')
     }
 
+    // Getting holidays data
     axios({
       method: 'get',
       url: 'https://date.nager.at/api/v3/PublicHolidays/2023/UA',
