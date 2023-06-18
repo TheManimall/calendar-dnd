@@ -1,5 +1,4 @@
-import update from 'immutability-helper'
-import React, { Fragment, useState, useCallback, useEffect, ReactNode } from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import clsx from 'clsx'
 import { useDrop } from 'react-dnd'
@@ -12,7 +11,7 @@ type DayProps = {
   day: string
   date: string
   task: TaskType,
-  taskArr: any, //remove
+  taskArr: any,
   isToday: boolean,
   isSearching: boolean,
   labelId: number,
@@ -30,9 +29,11 @@ const Day = ({
    onClickDay, onAddTask, onDrop, onReorder, onCreateLabel 
   }: DayProps): JSX.Element => {
 
+  // Handle drop functionalty by day
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: 'TASK',
-    drop: (item: any, monitor) => {
+    drop: (item: any) => {
+      // Disabled if filtering tasks or doing reorder tasks
       if (date === item!.dayId || isSearching) {
         return
       }
@@ -43,13 +44,6 @@ const Day = ({
       canDrop: monitor.canDrop(),
     }),
   }))
-
-  type sortedArr = [
-    text: string,
-    isEditable: boolean,
-    id: number,
-    order: number,
-  ]
 
   return (
     <DayStyled 

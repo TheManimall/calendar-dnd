@@ -42,18 +42,21 @@ const Task = ({
   const inputRef = useRef<HTMLInputElement | null>(null)
   const ref = useRef<HTMLDivElement>(null)
 
+  // Add focus to created input
   useEffect(() => {
     if (isEditable) {
       inputRef.current!.focus()
     }
   }, [isEditable])
 
+  // Handle text input for creating task
   const handleChange = useCallback((e: any) => {
     const { target: { value }} = e
 
     setInputValue(value)
   }, [])
 
+  // Handle create or edit task
   const handleAddTask = useCallback(() => {
     if (isEditable && !!inputValue) {
       onAddTask(taskId, dayId, inputValue, false)
@@ -64,15 +67,12 @@ const Task = ({
     }
   }, [taskId, dayId, inputValue, onAddTask, isEditable, text])
 
+  // Saving text by Enter key
   const handleOnEnterAdd = useCallback((e: any) => {
     if (e.keyCode === 13) {
       handleAddTask()
     }
   }, [handleAddTask])
-
-  interface DropResult {
-    date: string,
-  }
 
   interface DragItem {
     order: number
@@ -81,6 +81,7 @@ const Task = ({
     taskId: number
   }
 
+  // Handle reorder tasks
   const [{ handlerId }, drop] = useDrop<
     DragItem,
     void,
@@ -119,6 +120,7 @@ const Task = ({
     },
   })
 
+  // Handle drag functionality
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'TASK',
     item: () => ({ dayId, taskId, order }),
@@ -131,12 +133,14 @@ const Task = ({
   const opacity = isDragging ? 0 : 1
   drag(drop(ref))
 
+  // Handle open modal
   const handleOpenAddLabel = useCallback((e: any) => {
     e.preventDefault()
     e.stopPropagation()
     setIsAddLabel(true)
   }, [])
 
+  // Handle close modal
   const handleCloseAddLabel = useCallback(() => {
     setIsAddLabel(false)
   }, [])

@@ -31,6 +31,7 @@ const Calendar = ({ days, today, holidays }: CalendarProps): JSX.Element => {
   const isSearching: any = useRef()
   const screenshotRef: any = useRef(null)
 
+  // Init tasks
   useEffect(() => {
     const taskObj = days!.reduce<{}>((acc, el) => ({
       ...acc,
@@ -42,6 +43,7 @@ const Calendar = ({ days, today, holidays }: CalendarProps): JSX.Element => {
     isSearching.current = false
   }, [])
 
+  // Handle creating empty task by day
   const handleClickDay = useCallback((e: any) => {
     const { target: { id }} = e
     
@@ -62,6 +64,7 @@ const Calendar = ({ days, today, holidays }: CalendarProps): JSX.Element => {
     setIdTask(prevState => prevState + 1)
   }, [idTask])
   
+  // Handle set text to task && handle edit task
   const handleAddTask = useCallback(
     (id: number, dayId: string, text: string, isEditable: boolean = false) => {
       if (isSearching.current) return
@@ -81,6 +84,7 @@ const Calendar = ({ days, today, holidays }: CalendarProps): JSX.Element => {
       }))
   }, [])
 
+  // Handle drag & drop functionality by day
   const handleDropTaskByDay = useCallback(
     (dayId: string, taskId: number, dropDayId: string) => {
       if (isSearching.current) {
@@ -106,6 +110,7 @@ const Calendar = ({ days, today, holidays }: CalendarProps): JSX.Element => {
       }
   }, [filterByText])
 
+  // Handle reorder tasks functionality using drag & drop 
   const handleReorderTask = useCallback(
     (dragIndex: number, hoverIndex: number, dragId: number, hoverId: number, dayId: string) => {
       if (dragIndex === undefined || isSearching.current) return
@@ -126,6 +131,7 @@ const Calendar = ({ days, today, holidays }: CalendarProps): JSX.Element => {
       }))
   }, [])
 
+  // Handle filter functionality by text
   const handleFilterByText = useCallback((e: any) => {
     const { target: { value }} = e
     setFilterByText(value)
@@ -157,6 +163,7 @@ const Calendar = ({ days, today, holidays }: CalendarProps): JSX.Element => {
     isSearching.current = true
   }, [tasks, emptyTasks])
 
+  // Handle creating labels by task && creating filter view for labels
   const handleCreateLabel = useCallback(
     (dayId: string, taskId: number, labelId: number, color: string, text: string, isCreate: boolean = true) => {
       if (isCreate) {
@@ -209,6 +216,7 @@ const Calendar = ({ days, today, holidays }: CalendarProps): JSX.Element => {
       }
   }, [])
 
+  // Handle filter functionality by labels
   const handleFilterByLabel = useCallback((id: number | null) => {
     setFilterTasks(emptyTasks)
 

@@ -22,16 +22,19 @@ const Control = ({
   search, labels, calendarData, screenshotRef, labelsData, onLabelFilter, onSearch, onSetFilesData, onSetLabelData 
 }: ControlType) => {
   const [filterById, setFilterById] = useState<number | null>(null)
-
+  
+  // Disabled search functionality by labels if searching by text => in future can do both in one time
   useEffect(() => {
     if (search) setFilterById(null)
   }, [search])
 
+  // Handle creating screenshot
   const [image, takeScreenshot] = useScreenshot({
     type: "image/jpeg",
     quality: 1.0
   })
 
+  // Handle functionality for downloading screenshot
   const handleDownloadScreenshot = useCallback(
     (image: any, { name = "img", extension = "jpg" } = {}) => {
       const a = document.createElement("a");
@@ -42,6 +45,7 @@ const Control = ({
 
   const getImage = () => takeScreenshot(screenshotRef.current).then(handleDownloadScreenshot)
 
+  // Handle functionality for filtering tasks by labels
   const handleSelectLabel = useCallback((e: any) => {
     const { currentTarget: { dataset: { id } }} = e
     const idToNumber = Number(id)
@@ -55,6 +59,7 @@ const Control = ({
     }
   }, [onLabelFilter, filterById, search])
 
+  // Handle export JSON functionality
   const handleExportJSONfile = useCallback(() => {
     const fileName = "calendar.json";
     const exportedData = { calendar: calendarData, labels: labelsData }
@@ -68,6 +73,7 @@ const Control = ({
     document.body.removeChild(link);
   }, [calendarData, labelsData])
 
+  // Handle import JSON functionality
   const handleImportJSONfile = useCallback((e: any) => {
     const fileReader = new FileReader();
     fileReader.readAsText(e.target.files[0], "UTF-8");
